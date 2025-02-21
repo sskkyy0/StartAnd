@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -36,11 +38,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            ProfileCardScreen()
             ProfileCardComponent(
                 modifier = Modifier
-                    .height(80.dp)
+                    .height(120.dp)
                     .width(160.dp)
-                    .padding(16.dp)
             )
         }
     }
@@ -49,34 +51,48 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ProfileCardComponent(
     modifier: Modifier = Modifier,
+
 ){
-    val GreyColor = Color(0xD9D9D9)
+    val GreyColor = Color(0xFFD9D9D9)
     Card(
-        modifier = Modifier.background(color = Color.LightGray),
-        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
+            .padding(15.dp),
+        shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
             containerColor = GreyColor)
     ) {
-        Row(
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+                .height(80.dp)
+                .width(160.dp)
         ){
-            Image(
-                painter = painterResource(id= R.drawable.robot),
-                contentDescription = "Profile Image",
+            Row(
                 modifier = Modifier
-                    .size(40.dp)
-                    .padding(10.dp),
-                contentScale = ContentScale.Crop
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text("이름: 김하늘")
-                Text("학번: 202411276")
-                Text("학과: 컴퓨터공학부")
-            }
+                    .fillMaxSize()
+                    .padding(10.dp)
+            ){
+                Image(
+                    painter = painterResource(id= R.drawable.robot),
+                    contentDescription = "Profile Image",
+                    modifier = Modifier
+                        .size(40.dp)
+//                        .padding(10.dp)
+                        ,
+                    contentScale = ContentScale.Crop
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Column (
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(end = 10.dp),
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Text("이름: 김하늘")
+                    Text("학번: 202411276")
+                    Text("학과: 컴퓨터공학부")
+                }
 
+            }
         }
     }
 }
@@ -87,7 +103,9 @@ fun ProfileCardScreen(){
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-    )
+    ){
+
+    }
 }
 
 
@@ -96,10 +114,11 @@ fun ProfileCardScreen(){
 private fun ProfileCardPreview(
 
     ){
+    ProfileCardScreen()
     ProfileCardComponent(
         modifier = Modifier
-            .height(200.dp)
-            .width(500.dp)
+            .height(80.dp)
+            .width(160.dp)
             .padding(16.dp)
     )
 }
