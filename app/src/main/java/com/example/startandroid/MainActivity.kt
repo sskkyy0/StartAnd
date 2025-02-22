@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Card
@@ -43,12 +45,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ProfileCardScreen()
-
-            ProfileCardComponent(
+            LazyColumn (
                 modifier = Modifier
-                    .height(120.dp)
-                    .width(160.dp)
-            )
+                    .fillMaxWidth()
+            ){
+                items(7){
+                    ProfileCardComponent(
+                        modifier = Modifier
+                            .height(120.dp)
+                            .width(160.dp)
+                    )
+                }
+            }
         }
     }
 }
@@ -110,6 +118,7 @@ fun ProfileCardComponent(
                 }
 
             }
+
         }
     }
 }
@@ -133,10 +142,16 @@ private fun ProfileCardPreview(
 
 ) {
     ProfileCardScreen()
-    ProfileCardComponent(
+    LazyColumn(
         modifier = Modifier
-            .height(80.dp)
-            .width(160.dp)
-            .padding(16.dp)
-    )
+            .fillMaxWidth()
+    ) {
+        items(7){
+            ProfileCardComponent(
+                modifier = Modifier
+                    .height(120.dp)
+                    .width(160.dp)
+            )
+        }
+    }
 }
