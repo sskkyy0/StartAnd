@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -29,8 +30,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat.Style
 import com.example.startandroid.ui.theme.StartAndroidTheme
 
 class MainActivity : ComponentActivity() {
@@ -39,6 +43,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ProfileCardScreen()
+
             ProfileCardComponent(
                 modifier = Modifier
                     .height(120.dp)
@@ -51,45 +56,57 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ProfileCardComponent(
     modifier: Modifier = Modifier,
-
-){
-    val GreyColor = Color(0xFFD9D9D9)
-    Card(
+// 인자
+) {
+    val GreyColor = Color(0xFFD9D9D9) // 16진수 코드로 색깔 지정
+    Card( // 카드 자체에 패딩, 둥근 모서리, 배경색 설정
         modifier = Modifier
             .padding(15.dp),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = GreyColor)
+            containerColor = GreyColor
+        )
     ) {
         Box(
             modifier = Modifier
                 .height(80.dp)
                 .width(160.dp)
-        ){
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(10.dp)
-            ){
-                Image(
-                    painter = painterResource(id= R.drawable.robot),
-                    contentDescription = "Profile Image",
-                    modifier = Modifier
-                        .size(40.dp)
-//                        .padding(10.dp)
+            ) {
+                Box( // 박스에 패딩을 적용해야 내가 아는 패딩이 됨
+                    modifier = Modifier.padding(10.dp)
+                ){
+                    Card( // 카드에 패딩을 적용하면 카드 안 내용물에 패딩이 적용됨
+                        modifier = Modifier
+                            .size(40.dp)
+                        //.padding(10.dp)
                         ,
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Column (
+                        shape = RoundedCornerShape(10.dp)
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.robot),
+                            contentDescription = "Profile Image",
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+
+
+                //Spacer(modifier = Modifier.width(10.dp))
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(end = 10.dp),
-                    verticalArrangement = Arrangement.Center
-                ){
-                    Text("이름: 김하늘")
-                    Text("학번: 202411276")
-                    Text("학과: 컴퓨터공학부")
+                        .padding(top = 10.dp) // 원래 간격은 13인데, 옆에 이미지랑 높이 맞춤
+                    ,
+                ) {
+                    Text("이름: 김하늘", style = TextStyle(fontSize = 8.sp))
+                    Spacer(Modifier.height(3.dp))
+                    Text("학번: 202411276", style = TextStyle(fontSize = 8.sp))
+                    Spacer(Modifier.height(3.dp))
+                    Text("학과: 컴퓨터공학부", style = TextStyle(fontSize = 8.sp))
                 }
 
             }
@@ -98,12 +115,13 @@ fun ProfileCardComponent(
 }
 
 @Composable
-fun ProfileCardScreen(){
+fun ProfileCardScreen() {
+    // 흰색 배경
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-    ){
+    ) {
 
     }
 }
@@ -113,7 +131,7 @@ fun ProfileCardScreen(){
 @Composable
 private fun ProfileCardPreview(
 
-    ){
+) {
     ProfileCardScreen()
     ProfileCardComponent(
         modifier = Modifier
