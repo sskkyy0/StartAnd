@@ -67,18 +67,20 @@ fun ProfileCardComponent(
 // 인자
 ) {
     val GreyColor = Color(0xFFD9D9D9) // 16진수 코드로 색깔 지정
-    Card( // 카드 자체에 패딩, 둥근 모서리, 배경색 설정
+    Card( // 카드 자체에 패딩, 둥근 모서리
         modifier = Modifier
             .padding(15.dp),
         shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = GreyColor
-        )
+//        colors = CardDefaults.cardColors(
+//            containerColor = GreyColor
+//        )
+        //이 방법은 chatGPT가 추천해줬는데, 내가 배운 background를 쓰는것보다 더 복잡해서 주석처리함
     ) {
-        Box(
+        Box( // 크기, 배경색 설정
             modifier = Modifier
                 .height(80.dp)
                 .width(160.dp)
+                .background(GreyColor),
         ) {
             Row(
                 modifier = Modifier
@@ -117,6 +119,18 @@ fun ProfileCardComponent(
                     Text("학과: 컴퓨터공학부", style = TextStyle(fontSize = 8.sp))
                 }
 
+            }
+            Box(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.BottomEnd
+            ){
+                Image(painter = painterResource(id = R.drawable.eclipse1),
+                    contentDescription = "eclipse",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(15.dp)
+                )
             }
 
         }
