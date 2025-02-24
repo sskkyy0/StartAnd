@@ -34,23 +34,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.startandroid.R
 
+
+
 @Composable
 fun ProfileCardComponent(
     modifier: Modifier = Modifier,
     isClicked: Boolean,
     onTabClick: (Boolean) -> Unit
-// 인자
 ) {
+
     val graycolor = Color(0xFFD9D9D9) // 16진수 코드로 색깔 지정
     Card(
         // 카드 자체에 패딩, 둥근 모서리
         modifier = Modifier
             .padding(start = 13.dp, bottom = 15.dp),
         shape = RoundedCornerShape(10.dp),
-//        colors = CardDefaults.cardColors(
-//            containerColor = GreyColor
-//        )
-        // 이 방법은 chatGPT가 추천해줬는데, 내가 배운 background를 쓰는것보다 더 복잡해서 주석처리함
     ) {
         Box(
             // 크기, 배경색 설정
@@ -69,7 +67,6 @@ fun ProfileCardComponent(
                     Card( // 카드에 패딩을 적용하면 카드 안 내용물에 패딩이 적용됨
                         modifier = Modifier
                             .size(40.dp)
-                        //.padding(10.dp)
                         ,
                         shape = RoundedCornerShape(10.dp)
                     ) {
@@ -81,8 +78,6 @@ fun ProfileCardComponent(
                     }
                 }
 
-
-                //Spacer(modifier = Modifier.width(10.dp))
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -129,6 +124,9 @@ fun ProfileCardScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
+        var isClicked by remember {
+            mutableStateOf(false)
+        }
         val num = 7
 
         LazyColumn(
@@ -161,10 +159,6 @@ fun ProfileCardScreen() {
 private fun ProfileCardPreview(
 
 ) {
-    val num = 7
-    var isClicked by remember {
-        mutableStateOf(false)
-    }
     ProfileCardScreen()
 
 }
