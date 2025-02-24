@@ -19,13 +19,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,46 +32,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.NotificationCompat.Style
-import com.example.startandroid.ui.theme.StartAndroidTheme
 
 class MainActivity : ComponentActivity() {
-    private val num = 7 // 카드컴포넌트 개수를 상수로 설정
+    private val num = 7 // 카드컴포넌트 개수를 불변변수로 설정
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             // eclipse의 클릭 여부를 remember로 상태기억
             var isClicked by remember {
                 mutableStateOf(false)
             }
             ProfileCardScreen()
-            LazyColumn( // LazyColumn 안에 모든걸 해결하려고 하니 조금 지저분해보이긴 함
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                val cardStates = List(num) { // 각각 카드의 상태를 리스트로 저장
-                    mutableStateOf(false)
-                }
-                items(num) { index ->
-                    ProfileCardComponent(
-                        modifier = Modifier
-                            .height(120.dp)
-                            .width(160.dp),
-                        isClicked = cardStates[index].value,
-                        onTabClick = { newState ->
-                            cardStates[index].value =
-                                newState // 클릭하면 해당 인덱스의 값의 boolean 값 변경 -> newState
-                        }
-                    )
-                }
-            }
         }
     }
 }
@@ -87,11 +59,11 @@ fun ProfileCardComponent(
     onTabClick: (Boolean) -> Unit
 // 인자
 ) {
-    val GreyColor = Color(0xFFD9D9D9) // 16진수 코드로 색깔 지정
+    val graycolor = Color(0xFFD9D9D9) // 16진수 코드로 색깔 지정
     Card(
         // 카드 자체에 패딩, 둥근 모서리
         modifier = Modifier
-            .padding(15.dp),
+            .padding(start = 13.dp, bottom = 15.dp),
         shape = RoundedCornerShape(10.dp),
 //        colors = CardDefaults.cardColors(
 //            containerColor = GreyColor
@@ -103,7 +75,7 @@ fun ProfileCardComponent(
             modifier = Modifier
                 .height(80.dp)
                 .width(160.dp)
-                .background(GreyColor),
+                .background(graycolor),
         ) {
             Row(
                 modifier = Modifier
@@ -175,7 +147,30 @@ fun ProfileCardScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
+        val num = 7
 
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 11.dp),
+
+        ) {
+            val cardStates = List(num) {
+                mutableStateOf(false)
+            }
+            items(num) { index ->
+                ProfileCardComponent(
+                    modifier = Modifier
+                        .height(120.dp)
+                        .width(160.dp),
+                    isClicked = cardStates[index].value,
+                    onTabClick = { newState ->
+                        cardStates[index].value =
+                            newState
+                    }
+                )
+            }
+        }
     }
 }
 
@@ -185,29 +180,29 @@ fun ProfileCardScreen() {
 private fun ProfileCardPreview(
 
 ) {
-    val num=7
+    val num = 7
     var isClicked by remember {
         mutableStateOf(false)
     }
     ProfileCardScreen()
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        val cardStates = List(num) {
-            mutableStateOf(false)
-        }
-        items(num) { index ->
-            ProfileCardComponent(
-                modifier = Modifier
-                    .height(120.dp)
-                    .width(160.dp),
-                isClicked = cardStates[index].value,
-                onTabClick = { newState ->
-                    cardStates[index].value =
-                        newState
-                }
-            )
-        }
-    }
+//    LazyColumn(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//    ) {
+//        val cardStates = List(num) {
+//            mutableStateOf(false)
+//        }
+//        items(num) { index ->
+//            ProfileCardComponent(
+//                modifier = Modifier
+//                    .height(120.dp)
+//                    .width(160.dp),
+//                isClicked = cardStates[index].value,
+//                onTabClick = { newState ->
+//                    cardStates[index].value =
+//                        newState
+//                }
+//            )
+//        }
+//    }
 }
