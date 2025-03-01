@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import com.example.startandroid.R
 
 
-
 @Composable
 fun ProfileCardComponent(
     modifier: Modifier = Modifier,
@@ -66,8 +65,7 @@ fun ProfileCardComponent(
                 ) {
                     Card( // 카드에 패딩을 적용하면 카드 안 내용물에 패딩이 적용됨
                         modifier = Modifier
-                            .size(40.dp)
-                        ,
+                            .size(40.dp),
                         shape = RoundedCornerShape(10.dp)
                     ) {
                         Image(
