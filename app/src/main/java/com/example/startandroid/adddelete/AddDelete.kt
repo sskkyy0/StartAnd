@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,7 +70,9 @@ fun AddDeleteComponent(){
             Button(
                 modifier = Modifier
                     .height(40.dp)
-                    .width(100.dp),
+                    .width(100.dp)
+                    .clip(shape = RoundedCornerShape(100.dp))
+                ,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = lightPurple,
                     contentColor = Color.Black
@@ -85,7 +88,8 @@ fun AddDeleteComponent(){
             Button(
                 modifier = Modifier
                     .height(40.dp)
-                    .width(100.dp),
+                    .width(100.dp)
+                    .clip(shape = RoundedCornerShape(100.dp)),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = purple
                 ),
