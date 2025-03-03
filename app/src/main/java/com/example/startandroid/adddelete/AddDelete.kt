@@ -32,18 +32,69 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun AddDeleteScreen(){
+fun AddDeleteScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-    ){
+    ) {
         AddDeleteComponent()
     }
 }
 
 @Composable
-fun AddDeleteComponent(){
+fun Circle(color: Color, count: Int) {
+    Box(
+        modifier = Modifier
+            .background(color, shape = RoundedCornerShape(100.dp))
+            .size(80.dp),
+    ) {
+        Text(
+            count.toString(),
+            color = Color.White,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+
+
+
+@Composable
+fun RemoveButton(color: Color, onClick: () -> Unit) {
+    Button(
+        modifier = Modifier
+            .height(40.dp)
+            .width(100.dp)
+            .clip(shape = RoundedCornerShape(100.dp)),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = color,
+            contentColor = Color.Black
+        ),
+        onClick = onClick,
+    ) {
+        Text("삭제")
+    }
+}
+
+
+@Composable
+fun AddButton(color: Color, onClick: () -> Unit) {
+    Button(
+        modifier = Modifier
+            .height(40.dp)
+            .width(100.dp)
+            .clip(shape = RoundedCornerShape(100.dp)),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = color
+        ),
+        onClick = onClick
+    ) {
+        Text("추가")
+    }
+}
+
+@Composable
+fun AddDeleteComponent() {
     val coral = Color(0xFFFAB398)
     val lightPurple = Color(0xFFEADDFF)
     val purple = Color(0xFF66558F)
@@ -53,64 +104,30 @@ fun AddDeleteComponent(){
         modifier = Modifier
             .padding(bottom = 81.dp),
 
-    ){
-        Row (
+        ) {
+        Row(
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Bottom
-        ){
-            Button(
-                modifier = Modifier
-                    .height(40.dp)
-                    .width(100.dp)
-                    .clip(shape = RoundedCornerShape(100.dp))
-                ,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = lightPurple,
-                    contentColor = Color.Black
-                ),
-                onClick = {
-                    if (nums.size>1)
-                        nums = nums - (nums.last())
-                },
-            ) {
-                Text("삭제")
+        ) {
+            RemoveButton(lightPurple) {
+                if (nums.size > 1)
+                    nums = nums - (nums.last())
             }
             Spacer(Modifier.width(40.dp))
-            Button(
-                modifier = Modifier
-                    .height(40.dp)
-                    .width(100.dp)
-                    .clip(shape = RoundedCornerShape(100.dp)),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = purple
-                ),
-                onClick = {
-                    if (nums.size<6)
-                        nums = nums + (nums.size+1)
-                }
-            ) {
-                Text("추가")
+            AddButton(purple) {
+                if (nums.size < 6)
+                    nums = nums + (nums.size + 1)
             }
         }
 
     }
-    LazyColumn (
+    LazyColumn(
         modifier = Modifier.padding(30.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp)
-    ){
-        items(nums.size){ index ->
-            Box(
-                modifier = Modifier
-                    .background(coral, shape = RoundedCornerShape(100.dp))
-                    .size(80.dp),
-            ){
-                Text(
-                    "${nums[index]}",
-                    color = Color.White,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
+    ) {
+        items(nums.size) { index ->
+            Circle(coral, nums[index])
         }
 
     }
@@ -119,6 +136,6 @@ fun AddDeleteComponent(){
 
 @Preview
 @Composable
-fun AddDeleteScreenPreview(){
+fun AddDeleteScreenPreview() {
     AddDeleteScreen()
 }
