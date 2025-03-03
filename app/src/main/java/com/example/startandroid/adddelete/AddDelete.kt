@@ -57,10 +57,8 @@ fun Circle(color: Color, count: Int) {
     }
 }
 
-
-
 @Composable
-fun RemoveButton(color: Color, onClick: () -> Unit) {
+fun buttons(color: Color, textColor: Color, text: String, onClick: () -> Unit) {
     Button(
         modifier = Modifier
             .height(40.dp)
@@ -68,30 +66,14 @@ fun RemoveButton(color: Color, onClick: () -> Unit) {
             .clip(shape = RoundedCornerShape(100.dp)),
         colors = ButtonDefaults.buttonColors(
             containerColor = color,
-            contentColor = Color.Black
+            contentColor = textColor
         ),
         onClick = onClick,
     ) {
-        Text("삭제")
+        Text(text)
     }
 }
 
-
-@Composable
-fun AddButton(color: Color, onClick: () -> Unit) {
-    Button(
-        modifier = Modifier
-            .height(40.dp)
-            .width(100.dp)
-            .clip(shape = RoundedCornerShape(100.dp)),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = color
-        ),
-        onClick = onClick
-    ) {
-        Text("추가")
-    }
-}
 
 @Composable
 fun AddDeleteComponent() {
@@ -110,15 +92,16 @@ fun AddDeleteComponent() {
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Bottom
         ) {
-            RemoveButton(lightPurple) {
+            buttons(lightPurple, Color.Black, "삭제") {
                 if (nums.size > 1)
                     nums = nums - (nums.last())
             }
             Spacer(Modifier.width(40.dp))
-            AddButton(purple) {
+            buttons(purple, Color.White, "추가") {
                 if (nums.size < 6)
-                    nums = nums + (nums.size + 1)
+                    nums = nums + (nums.size+1)
             }
+
         }
 
     }
