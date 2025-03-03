@@ -13,7 +13,7 @@
         android:theme="@style/Theme.StartAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".adddelete.AddDelete"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.StartAndroid">
