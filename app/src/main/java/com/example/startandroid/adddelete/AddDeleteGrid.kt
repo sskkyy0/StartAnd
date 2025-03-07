@@ -36,7 +36,7 @@ fun AddDeleteGridScreen() {
 }
 
 @Composable
-fun LazyGridColumn(color: Color, nums: List<Int>) {
+fun verticalArr(color: Color, nums: List<Int>) {
     LazyVerticalGrid(
         contentPadding = PaddingValues(30.dp),
         columns = GridCells.Fixed(3),
@@ -50,8 +50,9 @@ fun LazyGridColumn(color: Color, nums: List<Int>) {
 }
 
 @Composable
-fun LazyGridRow(color: Color, nums: List<Int>) {
+fun horizonArr(color: Color, nums: List<Int>) {
     LazyHorizontalGrid(
+        modifier = Modifier.padding(bottom = 215.dp),
         contentPadding = PaddingValues(30.dp),
         rows = GridCells.Fixed(6),
         verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -71,6 +72,8 @@ fun AddDeleteGridComponent() {
     val orange = Color(0xFFFFA938)
 
     var nums by remember { mutableStateOf(listOf(1)) }
+    var isGridRC by remember { mutableStateOf(true) }
+
     Box(
         modifier = Modifier
             .padding(bottom = 81.dp),
@@ -82,7 +85,8 @@ fun AddDeleteGridComponent() {
                 .align(Alignment.BottomCenter)
         ) {
             buttons(orange, Color.Black, "이동") {
-
+                if (nums.size >6) nums = nums.take(6)
+                isGridRC = !isGridRC
             }
         }
         Row(
@@ -104,7 +108,8 @@ fun AddDeleteGridComponent() {
 
     }
 
-
+    if (isGridRC) verticalArr(coral, nums)
+    else horizonArr(coral, nums)
 }
 
 @Preview
