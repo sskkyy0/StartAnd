@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
@@ -44,24 +47,38 @@ fun verticalArr(color: Color, nums: List<Int>) {
         horizontalArrangement = Arrangement.spacedBy(30.dp)
     ) {
         items(nums.size) { index ->
+            Box(
+                modifier = Modifier.size(80.dp)
+            )
             Circle(color, nums[index])
+
         }
     }
 }
 
 @Composable
 fun horizonArr(color: Color, nums: List<Int>) {
-    LazyHorizontalGrid(
-        modifier = Modifier.padding(bottom = 215.dp),
-        contentPadding = PaddingValues(30.dp),
-        rows = GridCells.Fixed(6),
-        verticalArrangement = Arrangement.spacedBy(15.dp),
-        horizontalArrangement = Arrangement.spacedBy(30.dp)
-    ) {
-        items(nums.size) { index ->
-            Circle(color, nums[index])
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(580.dp)
+            .padding(30.dp)
+    ){
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(6),
+            verticalArrangement = Arrangement.spacedBy(15.dp),
+            horizontalArrangement = Arrangement.spacedBy(30.dp)
+        ) {
+            items(nums.size) { index ->
+                Box(
+                    modifier = Modifier.size(80.dp)
+                ){
+                    Circle(color, nums[index])
+                }
+            }
         }
     }
+
 }
 
 @Composable
@@ -74,6 +91,8 @@ fun AddDeleteGridComponent() {
     var nums by remember { mutableStateOf(listOf(1)) }
     var isGridRC by remember { mutableStateOf(true) }
 
+
+
     Box(
         modifier = Modifier
             .padding(bottom = 81.dp),
@@ -85,7 +104,7 @@ fun AddDeleteGridComponent() {
                 .align(Alignment.BottomCenter)
         ) {
             buttons(orange, Color.Black, "이동") {
-                if (nums.size >6) nums = nums.take(6)
+                if (nums.size > 6) nums = nums.take(6)
                 isGridRC = !isGridRC
             }
         }
