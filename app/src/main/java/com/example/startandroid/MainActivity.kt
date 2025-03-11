@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.startandroid.adddelete.AddDeleteGridScreen
+import com.example.startandroid.adddelete.AddDeleteNavGraph
 import com.example.startandroid.adddelete.AddDeleteScreen
 import com.example.startandroid.profilecard.ProfileCardScreen
 
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             //ProfileCardScreen()
             //AddDeleteScreen()
-            AddDeleteGridScreen()
+            AddDeleteNavGraph()
         }
     }
 }
