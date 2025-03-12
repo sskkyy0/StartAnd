@@ -1,6 +1,5 @@
 package com.example.startandroid.adddelete
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,22 +27,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
+
 @Composable
 fun AddDeleteGridScreen(navController: NavController) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        AddDeleteGridComponent(){
-            navController.popBackStack()
-        }
-    }
-}
-
-
-@Composable
-fun AddDeleteGridComponent(onMoveClick : () -> Unit) {
     val coral = Color(0xFFFAB398)
     val lightPurple = Color(0xFFEADDFF)
     val purple = Color(0xFF66558F)
@@ -62,7 +48,8 @@ fun AddDeleteGridComponent(onMoveClick : () -> Unit) {
                 .align(Alignment.BottomCenter)
         ) {
             Buttons(orange, Color.Black, "이동") {
-                onMoveClick
+                if (nums.size>6) nums.take(6)
+                navController.popBackStack()
             }
         }
         Row(
@@ -93,7 +80,7 @@ fun AddDeleteGridComponent(onMoveClick : () -> Unit) {
         items(nums.size) { index ->
             Box(
                 modifier = Modifier.size(80.dp)
-            ){
+            ) {
                 Circle(coral, nums[index])
             }
         }
@@ -101,7 +88,7 @@ fun AddDeleteGridComponent(onMoveClick : () -> Unit) {
 }
 
 @Composable
-fun AddDeleteScreen2(onMoveClick: () -> Unit) {
+fun AddDeleteScreen2(navController: NavController) {
     val coral = Color(0xFFFAB398)
     val lightPurple = Color(0xFFEADDFF)
     val purple = Color(0xFF66558F)
@@ -120,7 +107,7 @@ fun AddDeleteScreen2(onMoveClick: () -> Unit) {
                 .align(Alignment.BottomCenter)
         ) {
             Buttons(orange, Color.Black, "이동") {
-                onMoveClick
+                navController.navigate("add_delete_grid")
             }
         }
         Row(
@@ -159,11 +146,9 @@ fun AddDeleteNavGraph() {
     NavHost(
         navController = navController,
         startDestination = "add_delete"
-    ){
+    ) {
         composable("add_delete") {
-            AddDeleteScreen2 {
-                navController.navigate("add_delete_grid")
-            }
+            AddDeleteScreen2 (navController)
         }
         composable("add_delete_grid") {
             AddDeleteGridScreen(navController)
