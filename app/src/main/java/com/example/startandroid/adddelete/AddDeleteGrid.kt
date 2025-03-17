@@ -15,7 +15,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,13 +29,11 @@ import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-fun AddDeleteGridScreen(navController: NavController) {
+fun AddDeleteGridScreen(navController: NavController, nums: List<Int>, onUpdateNum: (List<Int>) -> Unit) {
     val coral = Color(0xFFFAB398)
     val lightPurple = Color(0xFFEADDFF)
     val purple = Color(0xFF66558F)
     val orange = Color(0xFFFFA938)
-
-    var nums by remember { mutableStateOf(listOf(1)) }
 
     Box(
         modifier = Modifier
@@ -48,8 +46,8 @@ fun AddDeleteGridScreen(navController: NavController) {
                 .align(Alignment.BottomCenter)
         ) {
             Buttons(orange, Color.Black, "이동") {
-                if (nums.size>6) nums.take(6)
                 navController.popBackStack()
+                onUpdateNum(nums.take(6))
             }
         }
         Row(
@@ -58,13 +56,14 @@ fun AddDeleteGridScreen(navController: NavController) {
             verticalAlignment = Alignment.Bottom
         ) {
             Buttons(lightPurple, Color.Black, "삭제") {
-                if (nums.size > 1)
-                    nums = nums - (nums.last())
+                if (nums.size > 1){
+                    onUpdateNum(nums.dropLast(1))
+                }
             }
             Spacer(Modifier.width(40.dp))
             Buttons(purple, Color.White, "추가") {
                 if (nums.size < 15)
-                    nums = nums + (nums.size + 1)
+                    onUpdateNum(nums + (nums.size+1))
             }
 
         }
@@ -88,14 +87,13 @@ fun AddDeleteGridScreen(navController: NavController) {
 }
 
 @Composable
-fun AddDeleteScreen2(navController: NavController) {
+fun AddDeleteScreen2(navController: NavController, nums: List<Int>, onUpdateNum : (List<Int>)-> Unit) {
     val coral = Color(0xFFFAB398)
     val lightPurple = Color(0xFFEADDFF)
     val purple = Color(0xFF66558F)
     val orange = Color(0xFFFFA938)
 
 
-    var nums by remember { mutableStateOf(listOf(1)) }
     Box(
         modifier = Modifier
             .padding(bottom = 81.dp),
@@ -117,12 +115,12 @@ fun AddDeleteScreen2(navController: NavController) {
         ) {
             Buttons(lightPurple, Color.Black, "삭제") {
                 if (nums.size > 1)
-                    nums = nums - (nums.last())
+                    onUpdateNum(nums.dropLast(1))
             }
             Spacer(Modifier.width(40.dp))
             Buttons(purple, Color.White, "추가") {
                 if (nums.size < 6)
-                    nums = nums + (nums.size + 1)
+                    onUpdateNum(nums + (nums.size+1))
             }
         }
 
@@ -142,16 +140,21 @@ fun AddDeleteScreen2(navController: NavController) {
 @Composable
 fun AddDeleteNavGraph() {
     val navController = rememberNavController()
+    var nums by rememberSaveable { mutableStateOf(listOf(1)) }
 
     NavHost(
         navController = navController,
         startDestination = "add_delete"
     ) {
         composable("add_delete") {
-            AddDeleteScreen2 (navController)
+            AddDeleteScreen2 (navController, nums){ UpdateNum ->
+                nums = UpdateNum
+            }
         }
         composable("add_delete_grid") {
-            AddDeleteGridScreen(navController)
+            AddDeleteGridScreen(navController, nums){ UpdateNum ->
+                nums = UpdateNum
+            }
         }
     }
 
